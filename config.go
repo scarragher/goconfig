@@ -56,6 +56,19 @@ func GetConfigurationValue(key string) interface{} {
 	return config.Value
 }
 
+// SetConfigurationValue sets an existing configurations value
+func SetConfigurationValue(key string, value interface{}) error {
+	config, err := GetConfiguration(key)
+
+	if err != nil {
+		return err
+	}
+
+	config.Value = value
+
+	return nil
+}
+
 // ValueString returns the value of the specified configuration as a string
 func ValueString(key string) (string, error) {
 
