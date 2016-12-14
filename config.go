@@ -46,6 +46,7 @@ func GetConfiguration(key string) (*Configuration, error) {
 	if config.Key == "" {
 		return nil, errors.New("no configuration found")
 	}
+
 	return &config, nil
 }
 
