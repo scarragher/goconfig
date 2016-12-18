@@ -70,51 +70,26 @@ func SetConfigurationValue(key string, value interface{}) error {
 	return nil
 }
 
+// Config Functions
+
 // ValueString returns the value of the specified configuration as a string
-func ValueString(key string) (string, error) {
-
-	config, err := GetConfiguration(key)
-
-	if err != nil {
-		return "", err
-	}
-
-	return config.Value.(string), nil
+func (config Configuration) ValueString() string {
+	return config.Value.(string)
 }
 
 // ValueInt returns the value of the specified configuration as an int
-func ValueInt(key string) (int, error) {
-
-	config, err := GetConfiguration(key)
-
-	if err != nil {
-		return -1, err
-	}
-
-	return config.Value.(int), nil
+func (config Configuration) ValueInt() int {
+	return config.Value.(int)
 }
 
 // ValueBool returns the value of the specified configuration as a bool
-func ValueBool(key string) (bool, error) {
-
-	config, err := GetConfiguration(key)
-
-	if err != nil {
-		return false, err
-	}
-
-	return config.Value.(bool), nil
+func (config Configuration) ValueBool() bool {
+	return config.Value.(bool)
 }
 
 // ValueFloat64 returns the value of the specified configuration as a float64
-func ValueFloat64(key string) (float64, error) {
-	config, err := GetConfiguration(key)
-
-	if err != nil {
-		return -1., err
-	}
-
-	return config.Value.(float64), nil
+func (config Configuration) ValueFloat64() float64 {
+	return config.Value.(float64)
 }
 
 // NewConfiguration creates a new configuration with the specified key and value
@@ -122,8 +97,8 @@ func NewConfiguration(key string, value interface{}) *Configuration {
 	return &Configuration{key, value}
 }
 
-// SaveSpecified saves the current configuration to the specified filepath, saves to the current working directory if no path is specified
-func SaveSpecified(filename string, path string) error {
+// Save saves the current configuration to the specified filepath, saves to the current working directory if no path is specified
+func Save(filename string, path string) error {
 
 	if _, err := os.Stat(path); err != nil {
 
@@ -146,21 +121,8 @@ func SaveSpecified(filename string, path string) error {
 	return nil
 }
 
-// Save saves the current configuration to the current working directory
-func Save(filename string) error {
-
-	workingDirectory, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		return err
-	}
-
-	SaveSpecified(filename, workingDirectory)
-
-	return nil
-}
-
-// Initialise loads the cache from the specified file
-func Initialise(filepath string) error {
+// Load loads the cache from the specified file
+func Load(filepath string) error {
 
 	rawData, err := ioutil.ReadFile(filepath)
 

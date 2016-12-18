@@ -43,18 +43,14 @@ func TestConfigurations(t *testing.T) {
 		fmt.Println("OK")
 	}
 
-	err := config.SaveSpecified("config.json", "c:\\test")
+	err := config.Save("config.json", "c:\\test")
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	enabled, _ := config.ValueBool("IsTestEnabled")
-
-	if !enabled {
+	if !boolGConfig.ValueBool() {
 		log.Fatal("fail")
 	}
-
-	fmt.Println(enabled)
 
 }
